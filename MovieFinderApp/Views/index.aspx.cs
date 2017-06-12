@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -15,7 +16,6 @@ namespace MovieFinderApp.View
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             string sortBy = Request.QueryString["sortBy"];
             if (sortBy != null && sortBy != "") //if sortby is not null, we already have results and we just need them sorted
             {                                   //so we dont have to worry about the search query

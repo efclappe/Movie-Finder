@@ -75,3 +75,11 @@ div {
     padding-left: 30%;
     padding-right: 10%;
 }
+
+.textOnlyButton {
+    font-size: inherit;
+}
+
+textOnlyButton:hover {
+    border: 30px;
+}

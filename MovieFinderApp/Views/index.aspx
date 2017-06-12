@@ -35,7 +35,9 @@
                     <div class="movieResults" style="font-weight: bolder; color: #029c16; text-align:center"><%=results.resultCount%> results found for "<%=MovieFinder.getInstance().getCurrentSearchTerm()%>"</div>
                     <br />
                     <div class="sortHeader">
-                       Sort By: <a href="window.locationhref + '&sortBy=title'">Title</a> | <a href="window.locationhref + '&sortBy=year'">Year</a> | <a href="window.locationhref + '&sortBy=rating'">Rating</a>
+                       Sort By: <input type="button" class="textOnlyButton" value="Title" onclick="window.location.href = 'index.aspx?sortBy=title'" /> | 
+                       <input type="button" class="textOnlyButton" value="Year" onclick="window.location.href = 'index.aspx?sortBy=year'" /> | 
+                        <input type="button" class="textOnlyButton" value="Rating" onclick="window.location.href = 'index.aspx?sortBy=rating'" />
                     </div>
                     <br />
                     <%foreach (Movie movie in results.getMovies())
