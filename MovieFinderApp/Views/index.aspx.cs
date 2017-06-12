@@ -10,10 +10,15 @@ namespace MovieFinderApp.View
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
+
+        
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            string sortBy = Request.QueryString["sortBy"] ;
-            if (sortBy != null && sortBy != "") {
+
+            string sortBy = Request.QueryString["sortBy"];
+            if (sortBy != null && sortBy != "") //if sortby is not null, we already have results and we just need them sorted
+            {                                   //so we dont have to worry about the search query
                 if (sortBy.Equals("title"))
                 {
                     sortByTitle();
@@ -27,17 +32,44 @@ namespace MovieFinderApp.View
                     sortByRating();
                 }
             }
-           
+            else //else we are doing a search for the first time and need results, so lets get them!
+            {
+                if (Request.QueryString["searchTerm"] != null)
+                {
+                    string searchTerm = Request.QueryString["searchTerm"];
+
+                    Session["searchTerm"] = searchTerm;
+
+                    MovieFinder.getInstance().setCurrentSearchTerm(searchTerm);
+
+                    BuildMovieList(searchTerm);
+                }
+            }
+
         }
 
         protected void Submitform(object sender, EventArgs e)
         {
-            string searchTerm = SearchKeyword.Text;
+            string searchTerm = "1234";
+
+            Session["searchTerm"] = searchTerm;
 
             MovieFinder.getInstance().setCurrentSearchTerm(searchTerm);
 
             BuildMovieList(searchTerm);
+
+            
            
+        }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Session has begun!");
+        }
+
+        protected void Session_eND(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Session has ended!");
         }
 
         public async void BuildMovieList(string searchTerm)
@@ -50,8 +82,6 @@ namespace MovieFinderApp.View
             {
 
             }
-            
-            Response.Redirect(Request.RawUrl, false);
         }
 
         public void sortByTitle()

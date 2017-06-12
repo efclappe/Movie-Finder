@@ -28,6 +28,9 @@ public class MovieFinder
     //A list of movie objects populated after returning search results
     private List<Movie> movieResults = new List<Movie>();
 
+    //Manually selected list of "featured movies" for sidebar
+    private static List<Movie> featuredMovies = new List<Movie>();
+
     //Creates singleton instance if null, returns it if not
     public static MovieFinder getInstance()
     {
@@ -35,7 +38,27 @@ public class MovieFinder
         {
             instance = new MovieFinder();
         }
+
         return instance;
+    }
+
+    public async Task generateFeaturedMovies()
+    {
+        Task t = findFeaturedMovies();
+        await t;
+    }
+
+    private async Task findFeaturedMovies()
+    {
+        Movie m1 = await client.GetMovieAsync(11199);//Wild Hogs
+        Movie m2= await client.GetMovieAsync(51876);//Limitless
+        Movie m3 = await client.GetMovieAsync(24428);//The Avengers
+        Movie m4 = await client.GetMovieAsync(11836);//Spongebob
+
+        featuredMovies.Add(m1);
+        featuredMovies.Add(m2);
+        featuredMovies.Add(m3);
+        featuredMovies.Add(m4);
     }
 
     //Task resposnsible for searching the database using the term entered by the user
@@ -95,4 +118,10 @@ public class MovieFinder
     {
         return currentSearchTerm;
     }
+
+    public List<Movie> getFeaturedMovies()
+    {
+        return featuredMovies;
+    }
+
 }
