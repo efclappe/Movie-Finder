@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\index.aspx" />
-    <Content Include="Views\Results.aspx" />
+    <Content Include="Views\results.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -106,12 +106,12 @@
     <Compile Include="Views\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Results.aspx.cs">
-      <DependentUpon>Results.aspx</DependentUpon>
+    <Compile Include="Views\results.aspx.cs">
+      <DependentUpon>results.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\Results.aspx.designer.cs">
-      <DependentUpon>Results.aspx</DependentUpon>
+    <Compile Include="Views\results.aspx.designer.cs">
+      <DependentUpon>results.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <PropertyGroup>

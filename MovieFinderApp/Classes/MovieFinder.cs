@@ -10,20 +10,19 @@ using TMDbLib.Objects.Search;
 //Uses TMDbLib, a C# wrapper for The Movie Database's API
 public class MovieFinder
 {
-    //Singleton instance
-    private static MovieFinder instance;
-
     //My api key
     private static string APIKey = "c729b8fb4ce55457e5497c3630933df2";
 
     //Client responsible for searching the database
-    private TMDbClient client = new TMDbClient(APIKey);
+    private TMDbClient client;
 
     //Currently searched movie, used by front end
     private string currentSearchTerm;
 
     //Current search results, used by front end
     private MovieSearchResult currentSearch;
+
+    public string test = "test";
     
     //A list of movie objects populated after returning search results
     private List<Movie> movieResults = new List<Movie>();
@@ -32,14 +31,9 @@ public class MovieFinder
     private static List<Movie> featuredMovies = new List<Movie>();
 
     //Creates singleton instance if null, returns it if not
-    public static MovieFinder getInstance()
+    public MovieFinder()
     {
-        if (instance == null)
-        {
-            instance = new MovieFinder();
-        }
-
-        return instance;
+        client = new TMDbClient(APIKey);
     }
 
     public async Task generateFeaturedMovies()
@@ -66,8 +60,7 @@ public class MovieFinder
     public async Task searchForMovieByTitle(string searchTerm)
     {
         movieResults.Clear();
-        MovieFinder database = MovieFinder.getInstance();
-        SearchContainer<SearchMovie> dbSearchResults = database.client.SearchMovieAsync(searchTerm).Result;
+        SearchContainer<SearchMovie> dbSearchResults = this.client.SearchMovieAsync(searchTerm).Result;
         foreach (SearchMovie movie in dbSearchResults.Results)
         {
            Task t = GetMovieByID(movie.Id);

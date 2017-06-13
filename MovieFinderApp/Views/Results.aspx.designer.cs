@@ -10,6 +10,6 @@
 namespace MovieFinderApp.View {
     
     
-    public partial class Results {
+    public partial class results {
     }
 }
