@@ -2,7 +2,6 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="results.aspx.cs" Async="true" EnableEventValidation="false" Inherits="MovieFinderApp.View.results"%>
 <%@ Import Namespace="TMDbLib.Objects.Search" %> 
 <%@ Import Namespace="TMDbLib.Objects.Movies" %>  
-<%var searchTerm = Session["searchTerm"];%>
 <%MovieSearchResult results = mf.getCurrentSearchResults(); %>
 
 <!DOCTYPE html>
@@ -12,32 +11,40 @@
     <link href="../CSS/moviefinder.css" rel="stylesheet" type="text/css" />
 </head>
 <body>    
-    <div style="text-align: center; padding:20px" id="welcomeText">
-            Hello. Enter a movie name to search for it.
+    <div style="text-align: center; id="welcomeText">
+            Hello. Enter a movie name to begin search.
     </div>
-    <div id="searchBar" style="padding-top:20px; padding-bottom:50px;">
-            <input type="text" id="searchterm" placeholder="Search" value="<%= Session["searchTerm"] %>" style="width:200px;" />
-            <input type="button" value="Find Movies" onclick="window.location.href = 'results.aspx?searchTerm=' + document.getElementById('searchterm').value" />
+
+    <div id="searchBar" style="padding-top:20px; padding-bottom:50px; text-align:center; display:block">
+        <form id="searchForm" action="results.aspx" method="post">
+            <input name="searchQuery" type="text" placeholder="Search..." id="searchQuery" />
+            Sort By:
+            <select form="searchForm" name="filter" id="filter">
+                <option value="relevance">Relevance</option>
+                <option value="title">Title</option>
+                <option value="year">Year</option>
+                <option value="rating">Rating</option>
+            </select>
+            <input type="submit" name="Button1" value="Find Movies" id="Button1" />
+        </form>
     </div>
-    <div class="sidebar">
-        Hi.
+    <div>
+    <div class="sidebar" style="width:15%">
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
     </div>
-    <div class="mainView">
-        <%if (!(searchTerm == null))
+    <div class="mainView" style="width:85%; float:right">
+        <%if (!(searchQuery == null))
             {%>
                 <%if (results.getResultCount() == 0)
                     {%>
-                    <div class="movieResults" style="font-weight: bolder; color: #ff0000; text-align:center"><%=results.resultCount%> results found for "<%=mf.getCurrentSearchTerm()%>"</div>
+                    <div class="movieResults" style="font-weight: bolder; color: #ff0000; text-align:center"><%=results.resultCount%> results found for "<%=searchQuery%>"</div>
               <%}
                   else
                   {%>
-                    <div class="movieResults" style="font-weight: bolder; color: #029c16; text-align:center"><%=results.resultCount%> results found for "<%=mf.getCurrentSearchTerm()%>"</div>
-                    <br />
-                    <div class="sortHeader">
-                       Sort By: <input type="button" class="textOnlyButton" value="Title" onclick="window.location.href = 'index.aspx?sortBy=title'" /> | 
-                       <input type="button" class="textOnlyButton" value="Year" onclick="window.location.href = 'index.aspx?sortBy=year'" /> | 
-                        <input type="button" class="textOnlyButton" value="Rating" onclick="window.location.href = 'index.aspx?sortBy=rating'" />
-                    </div>
+                    <div class="movieResults" style="font-weight: bolder; color: #029c16; text-align:center"><%=results.resultCount%> results found for "<%=searchQuery%>"</div>
                     <br />
                     <%foreach (Movie movie in results.getMovies())
                       { %>
@@ -54,5 +61,6 @@
                 }
              } %>
     </div>
+        </div>
 </body>
 </html>

@@ -11,34 +11,31 @@ namespace MovieFinderApp.View
 {
     public partial class results : System.Web.UI.Page
     {
-        public MovieFinder mf = new MovieFinder();
+        protected MovieFinder mf = new MovieFinder();
+
+        protected string searchQuery = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(Request.RawUrl);
 
-            NameValueCollection queryParameters = Request.QueryString;
+            searchQuery = Request.Form["searchQuery"];
 
-            string searchTerm = Request.Form["TextBox1"];
+            string filter = Request.Form["filter"];
 
-            if (searchTerm != null && searchTerm != "")
+            if (searchQuery != null && searchQuery != "")
             {
-                Session["searchTerm"] = searchTerm;
+                Session["searchQuery"] = searchQuery;
 
-                mf.setCurrentSearchTerm(searchTerm);
-
-                BuildMovieList(searchTerm);
+                BuildMovieList(searchQuery);
             }
             else
             {
                 Response.Redirect("index.aspx", true); //search term was null or blank, go back to home page
             }
 
-            string sortBy = queryParameters["sortBy"];
-
-            if (sortBy != null && sortBy != "") //sort the results
+            if (filter != null && filter != "") //sort the results
             {                                   
-                switch (sortBy)
+                switch (filter)
                 {
                     case "relevance":
                         break; //default, no sorting required
@@ -62,15 +59,15 @@ namespace MovieFinderApp.View
             }
             else
             {
-                //Response.Redirect("error.aspx", false); // sort parameter was probably blank or not specified
+                Response.Redirect("error.aspx", false); // sort parameter was probably blank or not specified
             }
         }
 
-        public async void BuildMovieList(string searchTerm)
+        public async void BuildMovieList(string searchQuery)
         {
              try
             {
-                await mf.searchForMovieByTitle(searchTerm);
+                await mf.searchForMovieByTitle(searchQuery);
             }
             catch //Too many request exception
             {
@@ -78,10 +75,6 @@ namespace MovieFinderApp.View
             }
         }
 
-        public void test()
-        {
-            System.Diagnostics.Debug.WriteLine("test");
-        }
 
         public void sortByTitle()
         {

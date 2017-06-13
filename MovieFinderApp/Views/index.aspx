@@ -9,16 +9,26 @@
 </head>
 <body>    
     <div style="text-align: center; padding:20px" id="welcomeText">
-            Hello. Enter a movie name to search for it.
+            Hello. Enter a movie name to begin search.
     </div>
     <div id="searchBar" style="padding-top:20px; padding-bottom:50px; text-align:center">
-        <form action="results.aspx" method="post">
-            <input name="TextBox1" type="text" placeholder="Search..." id="TextBox1" />
+        <form id="searchForm" action="results.aspx" method="post">
+            <input name="searchQuery" type="text" placeholder="Search..." id="searchQuery" />
+            Sort By:
+            <select form="searchForm" name="filter" id="filter">
+                <option value="relevance">Relevance</option>
+                <option value="title">Title</option>
+                <option value="year">Year</option>
+                <option value="rating">Rating</option>
+            </select>
             <input type="submit" name="Button1" value="Find Movies" id="Button1" />
         </form>
     </div>
     <div class="sidebar">
-        Hi.
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
+        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
     </div>
 </body>
 </html>
