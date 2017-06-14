@@ -15,9 +15,11 @@ namespace MovieFinderApp.View
 
         protected string searchQuery = "";
 
+        protected string filter = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+        
             searchQuery = Request.Form["searchQuery"];
 
             string filter = Request.Form["filter"];
@@ -26,15 +28,27 @@ namespace MovieFinderApp.View
             {
                 Session["searchQuery"] = searchQuery;
 
-                BuildMovieList(searchQuery);
+                BuildMovieList(searchQuery, filter);
             }
             else
             {
                 Response.Redirect("index.aspx", true); //search term was null or blank, go back to home page
+            }  
+        }
+
+        public async void BuildMovieList(string searchQuery, string filter)
+        {
+             try
+            {
+                await mf.searchForMovieByTitle(searchQuery);
+            }
+            catch //Too many request exception?
+            {
+
             }
 
             if (filter != null && filter != "") //sort the results
-            {                                   
+            {
                 switch (filter)
                 {
                     case "relevance":
@@ -61,18 +75,7 @@ namespace MovieFinderApp.View
             {
                 Response.Redirect("error.aspx", false); // sort parameter was probably blank or not specified
             }
-        }
 
-        public async void BuildMovieList(string searchQuery)
-        {
-             try
-            {
-                await mf.searchForMovieByTitle(searchQuery);
-            }
-            catch //Too many request exception
-            {
-
-            }
         }
 
 

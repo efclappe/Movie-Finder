@@ -24,11 +24,9 @@
             <input type="submit" name="Button1" value="Find Movies" id="Button1" />
         </form>
     </div>
-    <div class="sidebar">
-        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
-        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
-        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
-        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MTE5MjY5OV5BMl5BanBnXkFtZTcwNDEwMzUzMw@@._V1_.jpg" alt="this is a test" />
-    </div>
 </body>
+    
 </html>
+<footer>
+    <p>All information is retrieved from <a href="https://www.themoviedb.org/">The Movie Database</a>, using LordMike's c# Library <a href="https://github.com/LordMike/TMDbLib/">TMDbLib</a> </p>
+</footer>
