@@ -25,6 +25,7 @@ body {
 }
 
 a {
+ text-align:center;
   color: #2185d5;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;

@@ -14,10 +14,40 @@ public class MovieSearchResult
     private List<Movie> movies; 
 
 
-	public MovieSearchResult(int resultCount, List<Movie> movies)
+	public MovieSearchResult(int resultCount, List<Movie> movies, string filter)
 	{
-        this.resultCount = resultCount;
         this.movies = movies;
+
+        if (filter != null && filter != "") //sort the results
+        {
+            switch (filter)
+            {
+                case "relevance":
+                    break; //default, no sorting required
+
+                case "title":
+                    sortByTitle();
+                    break;
+
+                case "year":
+                    sortByYear();
+                    break;
+
+                case "rating":
+                    sortByRating();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        else
+        {
+
+        }
+
+        this.resultCount = resultCount;
+
 	}
 
     //Builds a list of genres for a Movie in the search results.  The genres are returned normally as an array of ints and strings,
@@ -40,13 +70,12 @@ public class MovieSearchResult
         return genres;
     }
 
-    public MovieSearchResult sortByTitle()
+    public void sortByTitle()
     {
-        movies.Sort((m1, m2) => m1.Title.CompareTo(m2.Title));
-        return new MovieSearchResult(this.resultCount, movies);
+        this.movies.Sort((m1, m2) => m1.Title.CompareTo(m2.Title));
     }
 
-    public MovieSearchResult sortByYear()
+    public void sortByYear()
     {
         List<Movie> invalidMovies = new List<Movie>();
         List<Movie> validMovies = new List<Movie>();
@@ -61,14 +90,12 @@ public class MovieSearchResult
                 validMovies.Add(m);
             }
         }
-        movies.Sort((x, y) => -DateTime.Compare(x.ReleaseDate ?? DateTime.MinValue, y.ReleaseDate ?? DateTime.MinValue));
-        return new MovieSearchResult(this.resultCount, movies);
+        this.movies.Sort((x, y) => -DateTime.Compare(x.ReleaseDate ?? DateTime.MinValue, y.ReleaseDate ?? DateTime.MinValue));
     }
 
-    public MovieSearchResult sortByRating()
+    public void sortByRating()
     {
-        movies.Sort((m1, m2) => m2.VoteAverage.CompareTo(m1.VoteAverage));
-        return new MovieSearchResult(this.resultCount, movies);
+        this.movies.Sort((m1, m2) => m2.VoteAverage.CompareTo(m1.VoteAverage));
     }
 
 

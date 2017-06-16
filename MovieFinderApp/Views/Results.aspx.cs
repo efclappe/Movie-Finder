@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,92 +18,38 @@ namespace MovieFinderApp.View
 
         protected string filter = "";
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
         
             searchQuery = Request.Form["searchQuery"];
 
-            string filter = Request.Form["filter"];
+            filter = Request.Form["filter"];
+
 
             if (searchQuery != null && searchQuery != "")
             {
                 Session["searchQuery"] = searchQuery;
 
-                BuildMovieList(searchQuery, filter);
+                await BuildMovieListAsync(searchQuery, filter);
             }
             else
             {
-                Response.Redirect("index.aspx", true); //search term was null or blank, go back to home page
-            }  
+                Response.Redirect("index.aspx", false); //search term was null or blank, go back to home page
+            }
         }
 
-        public async void BuildMovieList(string searchQuery, string filter)
+        public async Task BuildMovieListAsync(string searchQuery, string filter)
         {
-             try
+            try
             {
-                await mf.searchForMovieByTitle(searchQuery);
-            }
-            catch //Too many request exception?
+                await mf.searchForMovieByTitle(searchQuery, filter);
+             }
+            catch (TMDbLib.Objects.Exceptions.RequestLimitExceededException)
             {
-
-            }
-
-            if (filter != null && filter != "") //sort the results
-            {
-                switch (filter)
-                {
-                    case "relevance":
-                        break; //default, no sorting required
-
-                    case "title":
-                        sortByTitle();
-                        break;
-
-                    case "year":
-                        sortByYear();
-                        break;
-
-                    case "rating":
-                        sortByRating();
-                        break;
-
-                    default:
-                        Response.Redirect("error.aspx", true); //invalid search parameter, error out
-                        break;
-                }
-            }
-            else
-            {
-                Response.Redirect("error.aspx", false); // sort parameter was probably blank or not specified
+                Response.Redirect("TooManyRequestsError.html", false);
             }
 
-        }
 
-
-        public void sortByTitle()
-        {
-            MovieSearchResult currentResults = mf.getCurrentSearchResults();
-            MovieSearchResult sortedResults = currentResults.sortByTitle();
-
-            mf.setCurrentSearchResults(sortedResults);
-
-        }
-
-        public void sortByYear()
-        {
-            MovieSearchResult currentResults = mf.getCurrentSearchResults();
-            MovieSearchResult sortedResults = currentResults.sortByYear();
-
-            mf.setCurrentSearchResults(sortedResults);
-
-        }
-
-        public void sortByRating()
-        {
-            MovieSearchResult currentResults = mf.getCurrentSearchResults();
-            MovieSearchResult sortedResults = currentResults.sortByRating();
-
-            mf.setCurrentSearchResults(sortedResults);
 
         }
     }

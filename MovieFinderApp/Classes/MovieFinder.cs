@@ -17,7 +17,7 @@ public class MovieFinder
     private TMDbClient client;
 
     //Current search results, used by front end
-    private MovieSearchResult currentSearch;
+    private MovieSearchResult currentSearch = new MovieSearchResult(0, new List<Movie>(), "");
 
      //A list of movie objects populated after returning search results
     private List<Movie> movieResults = new List<Movie>();
@@ -30,17 +30,16 @@ public class MovieFinder
 
     //Task resposnsible for searching the database using the term entered by the user
     //Returns SearchMovie objects which are then converted into Movie objects in the following method
-    public async Task searchForMovieByTitle(string searchTerm)
+    public async Task searchForMovieByTitle(string searchTerm, string filter)
     {
-        movieResults.Clear();
         SearchContainer<SearchMovie> dbSearchResults = this.client.SearchMovieAsync(searchTerm).Result;
         foreach (SearchMovie movie in dbSearchResults.Results)
         {
            Task t = GetMovieByID(movie.Id);
            await t;
         }
-
-        buildMovieList(dbSearchResults.Results.Count, movieResults);
+        System.Diagnostics.Debug.WriteLine(dbSearchResults.Results.Count);
+        buildMovieList(dbSearchResults.Results.Count, movieResults, filter);
                 
     }
 
@@ -52,14 +51,9 @@ public class MovieFinder
     }
 
     //Builds the search results used by the front end using a MovieSearchResult object
-    public void buildMovieList(int resultCount, List<Movie> searchResults)
+    public void buildMovieList(int resultCount, List<Movie> searchResults, string filter)
     {
-        if(resultCount == 0)
-        {
-            currentSearch = null;
-        }
-
-        currentSearch = new MovieSearchResult(resultCount, searchResults);
+        currentSearch = new MovieSearchResult(resultCount, searchResults, filter);
     }
 
     //Getter for the current search results

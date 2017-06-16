@@ -11,12 +11,12 @@
     <link href="../CSS/moviefinder.css" rel="stylesheet" type="text/css" />
 </head>
 <body>    
-    <div id="searchBar" style="padding-top:20px; padding-bottom:50px; text-align:center; display:block">
+    <div id="searchBar" style="padding-top:20px; padding-bottom:50px; text-align:center">
         <form id="searchForm" action="results.aspx" method="post">
-            <input name="searchQuery" type="text" placeholder="Search..." value="<%=searchQuery%>" id="searchQuery" />
+            <input name="searchQuery" type="text" placeholder="Search..." id="searchQuery" />
             Sort By:
             <select form="searchForm" name="filter" id="filter">
-                <option id="option1" value="relevance">Relevance</option>
+                <option value="relevance">Relevance</option>
                 <option value="title">Title</option>
                 <option value="year">Year</option>
                 <option value="rating">Rating</option>

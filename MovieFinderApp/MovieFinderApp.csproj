@@ -91,6 +91,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\TooManyRequestsError.html" />
     <Content Include="Views\index.aspx" />
     <Content Include="Views\results.aspx" />
     <Content Include="Web.config" />
